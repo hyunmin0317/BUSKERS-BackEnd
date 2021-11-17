@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework.generics import ListAPIView, CreateAPIView, GenericAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import PostSerializer, CreateSerializer
@@ -23,3 +23,15 @@ class MyListAPI(ListAPIView):
     serializer_class = PostSerializer
     def get_queryset(self):
         return Post.objects.filter(owner = self.request.user.username)
+
+class DetailAPI(RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class UpdateAPI(UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class DeleteAPI(DestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
