@@ -1,6 +1,6 @@
 # api/urls.py
 from django.urls import path
-from .views import HelloAPI, CreateAPI, ListAPI, MyListAPI, DetailAPI, DeleteAPI, UpdateAPI
+from .views import CreateAPI, ListAPI, MyListAPI, DetailAPI, DeleteAPI, UpdateAPI
 
 urlpatterns = [
     path('all/', ListAPI.as_view()),

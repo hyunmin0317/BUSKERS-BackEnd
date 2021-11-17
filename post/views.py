@@ -1,14 +1,8 @@
 from django.shortcuts import render
-
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import PostSerializer, CreateSerializer
 from .models import Post
-
-@api_view(["GET"])
-def HelloAPI(request):
-    return Response("hello world!")
 
 class CreateAPI(CreateAPIView):
     serializer_class = CreateSerializer
