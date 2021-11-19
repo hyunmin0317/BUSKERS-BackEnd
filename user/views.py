@@ -3,9 +3,9 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-from rest_framework.generics import GenericAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import GenericAPIView, RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
 from knox.models import AuthToken
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer
+from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer, ProfileCreateSerializer
 from .models import Profile
 
 class RegistrationAPI(GenericAPIView):
@@ -50,3 +50,19 @@ class UserAPI(RetrieveAPIView):
 class ProfileListAPI(ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+class ProfileDetailAPI(RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfileCreateAPI(CreateAPIView):
+    serializer_class = ProfileCreateSerializer
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user.username)
+
+class ProfileUpdateAPI(UpdateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileCreateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user.username)
