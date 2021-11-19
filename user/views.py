@@ -3,16 +3,12 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework.generics import GenericAPIView, RetrieveAPIView, ListAPIView
 from knox.models import AuthToken
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
+from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer
+from .models import Profile
 
-# Create your views here.
-@api_view(["GET"])
-def HelloAPI(request):
-    return Response("hello world!")
-
-
-class RegistrationAPI(generics.GenericAPIView):
+class RegistrationAPI(GenericAPIView):
     serializer_class = CreateUserSerializer
 
     def post(self, request, *args, **kwargs):
@@ -30,8 +26,7 @@ class RegistrationAPI(generics.GenericAPIView):
             }
         )
 
-
-class LoginAPI(generics.GenericAPIView):
+class LoginAPI(GenericAPIView):
     serializer_class = LoginUserSerializer
 
     def post(self, request, *args, **kwargs):
@@ -45,9 +40,13 @@ class LoginAPI(generics.GenericAPIView):
         )
 
 
-class UserAPI(generics.RetrieveAPIView):
+class UserAPI(RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
+
+class ProfileListAPI(ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer

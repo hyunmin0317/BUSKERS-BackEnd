@@ -24,7 +24,10 @@ class DetailAPI(RetrieveAPIView):
 
 class UpdateAPI(UpdateAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = CreateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user.username)
 
 class DeleteAPI(DestroyAPIView):
     queryset = Post.objects.all()
