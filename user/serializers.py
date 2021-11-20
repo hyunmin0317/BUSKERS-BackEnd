@@ -40,7 +40,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-        lookup_filed='username'
 
 class ProfileCreateSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='user.id')

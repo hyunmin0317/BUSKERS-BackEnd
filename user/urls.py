@@ -8,6 +8,6 @@ urlpatterns = [
     path("user/", UserAPI.as_view()),
     path('profile/create/', ProfileCreateAPI.as_view()),
     path("profile/all/", ProfileListAPI.as_view()),
-    path("profile/<str:username>/", ProfileDetailAPI.as_view()),
-    path("profile/<str:username>/update/", ProfileUpdateAPI.as_view())
+    path("profile/<str:owner>/", ProfileDetailAPI.as_view()),
+    path("profile/<str:owner>/update/", ProfileUpdateAPI.as_view())
 ]

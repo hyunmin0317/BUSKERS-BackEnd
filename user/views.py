@@ -52,6 +52,7 @@ class ProfileListAPI(ListAPIView):
     serializer_class = ProfileSerializer
 
 class ProfileDetailAPI(RetrieveAPIView):
+    lookup_field = 'owner'
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
@@ -61,6 +62,7 @@ class ProfileCreateAPI(CreateAPIView):
         serializer.save(owner=self.request.user.username)
 
 class ProfileUpdateAPI(UpdateAPIView):
+    lookup_field = 'owner'
     queryset = Profile.objects.all()
     serializer_class = ProfileCreateSerializer
 
