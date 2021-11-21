@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-from rest_framework.generics import GenericAPIView, RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
+from rest_framework.generics import GenericAPIView, RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from knox.models import AuthToken
 from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer, ProfileCreateSerializer
 from .models import Profile
@@ -68,3 +68,17 @@ class ProfileUpdateAPI(UpdateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.username)
+
+class ProfileDeleteAPI(DestroyAPIView):
+    lookup_field = 'owner'
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+def following(request, username):
+    profile = get_object_or_404(Profile, user=request.user)
+    user = get_object_or_404(User, username=username)
+    fprofile = get_object_or_404(Profile, user=user)
+
+    profile.follow.add(user)
+    fprofile.follower.add(request.user)
+    return HttpResponse("Success")
