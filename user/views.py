@@ -73,12 +73,3 @@ class ProfileDeleteAPI(DestroyAPIView):
     lookup_field = 'owner'
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
-def following(request, username):
-    profile = get_object_or_404(Profile, user=request.user)
-    user = get_object_or_404(User, username=username)
-    fprofile = get_object_or_404(Profile, user=user)
-
-    profile.follow.add(user)
-    fprofile.follower.add(request.user)
-    return HttpResponse("Success")

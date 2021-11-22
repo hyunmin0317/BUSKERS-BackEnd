@@ -11,6 +11,5 @@ urlpatterns = [
     path("profile/all/", ProfileListAPI.as_view()),
     path("profile/<str:owner>/", ProfileDetailAPI.as_view()),
     path("profile/<str:owner>/update/", ProfileUpdateAPI.as_view()),
-    path("profile/<str:owner>/delete/", ProfileDeleteAPI.as_view()),
-    path('follow/<str:username>/', views.following)
+    path("profile/<str:owner>/delete/", ProfileDeleteAPI.as_view())
 ]
